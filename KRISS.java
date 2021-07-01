@@ -22,12 +22,11 @@ class KRISS {
     sc.close();
 
     System.out.println("-----------------------------");
-
-    informative(strs, physicalTable);
+    System.out.println(informative(strs, physicalTable));
 
   }
 
-  private static void informative(String[] strs, Hashtable<String, String> physicalTable) {
+  private static Hashtable<String, String> informative(String[] strs, Hashtable<String, String> physicalTable) {
     Hashtable<String, String> result = new Hashtable<>();
 
     for (int i = 0; i < strs.length; i++) {
@@ -37,6 +36,8 @@ class KRISS {
         result.put(strs[i], "o");
       }
     }
+
+    return result;
   }
 
   private static ArrayList<String> periodicTableSet() {
