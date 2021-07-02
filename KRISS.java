@@ -10,20 +10,57 @@ class KRISS {
 
     // physical, periodic set
     Hashtable<String, String> physicalTable = new Hashtable<>();
+    Hashtable<String, String> result = new Hashtable<>();
     ArrayList<String> periodicTable = new ArrayList<>();
     physicalTable = labelingSet();
     periodicTable = periodicTableSet();
 
-    // m count
-    int count = 1;
-
-    // split and array set
+    // input and split
     String[] strs = sc.nextLine().split(" ");
     sc.close();
 
-    System.out.println("-----------------------------");
-    System.out.println(informative(strs, physicalTable));
+    // X - X - HERE - X
+    result = informative(strs, physicalTable);
 
+    // X - HERE - X - X
+    result = findMaterial(strs, periodicTable, result);
+
+    System.out.println("-----------------------------");
+    System.out.println(result);
+
+  }
+
+  private static Hashtable<String, String> findMaterial(String[] strs, ArrayList<String> periodicTable,
+      Hashtable<String, String> result) {
+    int count = 1;
+    for (int i = 0; i < strs.length; i++) {
+      // exception
+      Pattern pattern = Pattern.compile("(The)");
+      Matcher matcher = pattern.matcher(strs[i]);
+      if (matcher.find()) {
+        continue;
+      }
+
+      // Find Material
+      for (int j = 0; j < periodicTable.size(); j++) {
+        pattern = Pattern.compile(periodicTable.get(j));
+        matcher = pattern.matcher(strs[i]);
+        if (matcher.find()) {
+          result.put(strs[i], "m" + count + "-" + result.get(strs[i]));
+          count++;
+          break;
+        }
+      }
+    }
+
+    for (int i = 0; i < strs.length; i++) {
+      Pattern pattern = Pattern.compile("(mp|ds|da|pp|pc|pv|pr|po|ps|pe|pre|pab|plec|mc|e|s)");
+      Matcher matcher = pattern.matcher(result.get(strs[i]));
+      if (matcher.find()) {
+        result.put(strs[i], "o-" + result.get(strs[i]));
+      }
+    }
+    return result;
   }
 
   private static Hashtable<String, String> informative(String[] strs, Hashtable<String, String> physicalTable) {
@@ -414,6 +451,7 @@ class KRISS {
     physicalProperties.put("thermal-chemical mechanism", "mc"); ////////////////// 이거 물어보3//////////////////
     physicalProperties.put("TCM", "mc");
     physicalProperties.put("SCLC, space-charge-limited-current", "mc");////////////////// 이거 물어보3//////////////////
+    physicalProperties.put("transition", "mc");
 
     // environment (e)
     // e
@@ -436,6 +474,7 @@ class KRISS {
     physicalProperties.put("e-beam", "s");
     physicalProperties.put("PVD (=Physical Vapor Deposition)", "s");
     physicalProperties.put("evaporator", "s");
+    physicalProperties.put("evaporation", "s");
     physicalProperties.put("PLD (=Pulsed Laser Deposition)", "s");
     physicalProperties.put("spin-coated", "s");
     physicalProperties.put("plasma", "s");
