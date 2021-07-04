@@ -29,9 +29,32 @@ class KRISS {
     // X - X - X - HERE
     result = findValue(strs, result);
 
-    System.out.println("-----------------------------");
-    System.out.println(result);
+    // HERE - X - X - X
+    result = findBI(strs, result);
 
+    System.out.println("-----------------------------");
+    for (int i = 0; i < strs.length; i++) {
+      System.out.println(strs[i] + " = " + result.get(strs[i]));
+    }
+
+  }
+
+  private static Hashtable<String, String> findBI(String[] strs, Hashtable<String, String> result) {
+    boolean beginning = true;
+    for (int i = 0; i < strs.length; i++) {
+      if (result.get(strs[i]) != "o") {
+        if (beginning) {
+          result.put(strs[i], "B-" + result.get(strs[i]));
+          beginning = false;
+        } else {
+          result.put(strs[i], "I-" + result.get(strs[i]));
+        }
+      } else {
+        beginning = true;
+      }
+    }
+
+    return result;
   }
 
   private static Hashtable<String, String> findValue(String[] strs, Hashtable<String, String> result) {
@@ -512,6 +535,7 @@ class KRISS {
     physicalProperties.put("angled", "s");
     physicalProperties.put("patterning", "s");
     physicalProperties.put("beam", "s");
+
     return physicalProperties;
   }
 }
