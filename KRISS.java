@@ -8,9 +8,10 @@ class KRISS {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
 
-    // physical, periodic set
-    Hashtable<String, String> physicalTable = new Hashtable<>();
     Hashtable<String, String> result = new Hashtable<>();
+
+    // physical, periodic, vaule set
+    Hashtable<String, String> physicalTable = new Hashtable<>();
     ArrayList<String> periodicTable = new ArrayList<>();
     physicalTable = labelingSet();
     periodicTable = periodicTableSet();
@@ -25,9 +26,27 @@ class KRISS {
     // X - HERE - X - X
     result = findMaterial(strs, periodicTable, result);
 
+    // X - X - X - HERE
+    result = findValue(strs, result);
+
     System.out.println("-----------------------------");
     System.out.println(result);
 
+  }
+
+  private static Hashtable<String, String> findValue(String[] strs, Hashtable<String, String> result) {
+    for (int i = 0; i < strs.length; i++) {
+      // exception
+      Pattern pattern = Pattern.compile("([\\d]{1,})");
+      Matcher matcher = pattern.matcher(strs[i]);
+      if (matcher.find()) {
+        result.put(strs[i], result.get(strs[i]) + "-v");
+      } else {
+        result.put(strs[i], result.get(strs[i]) + "-o");
+      }
+    }
+
+    return result;
   }
 
   private static Hashtable<String, String> findMaterial(String[] strs, ArrayList<String> periodicTable,
