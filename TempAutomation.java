@@ -192,17 +192,22 @@ public class TempAutomation {
         secondTable.put("rram", "da");
         secondTable.put("conductive", "mp");
 
-        int row = Integer.parseInt(result.get("row_index"));
-        int col = Integer.parseInt(result.get("col_index"));
+        try {
 
-        Pattern pattern = Pattern.compile("(CBRAM|ReRAM|oxram|mram|stt-ram|rram|conductive|RHRS|RLRS)");
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                Matcher matcher = pattern.matcher(result.get(i + "-" + j));
-                if (matcher.find()) {
-                    result.put((i + 1) + "-" + j, secondTable.get(result.get(i + "-" + j)));
+            int row = Integer.parseInt(result.get("row_index"));
+            int col = Integer.parseInt(result.get("col_index"));
+
+            Pattern pattern = Pattern.compile("(CBRAM|ReRAM|oxram|mram|stt-ram|rram|conductive|RHRS|RLRS)");
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < col; j++) {
+                    Matcher matcher = pattern.matcher(result.get(i + "-" + j));
+                    if (matcher.find()) {
+                        result.put((i + 1) + "-" + j, secondTable.get(result.get(i + "-" + j)));
+                    }
                 }
             }
+        } catch (Exception e) {
+            // e.printStackTrace();
         }
         return result;
     }
