@@ -18,11 +18,13 @@ public class TempAutomation {
         System.out.println("        [mp] conductive");
         System.out.println("        [mram] CBRAM, ReRAM, oxram, mram, stt-ram, rram");
         System.out.println("    * xls, xlsx 확장자 지원");
-        System.out.println("        다만 아쉽게도 구축도우미에서 받은 엑셀은 바로 불러와지지 않습니다.");
+        System.out.println("        다만 아쉽게도 구축도우미에서 받은 엑셀은 파일형식에 문제가 있기 때문에 바로");
+        System.out.println("        불러와지지 않습니다. 기존에 하시던대로 xls, xlsx 형식으로 다시 저장하신 후");
+        System.out.println("        새로 만든 엑셀 파일을 불러 오셔야 합니다.");
         System.out.println("    * 알고리즘 개선");
         System.out.println("        이제 파일명이나 경로가 잘못되어도 프로그램이 바로 종료되지 않습니다.");
+        System.out.println("    * 문의사항은 'https://open.kakao.com/o/sSWuETmd' 로 주십시오.");
 
-        // result = ExcelRead();
         ExcelWrite(ExcelRead());
 
     }
