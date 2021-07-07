@@ -14,9 +14,13 @@ public class TempAutomation {
 
     public static void main(String[] args) {
         System.out.println(" 패치 노트");
-        System.out.println("  * 물성표 일부 업데이트");
-        System.out.println("  * xls, xlsx 확장자 지원");
-        System.out.println("  * 알고리즘 개선");
+        System.out.println("    * 새로 추가된 물성표 업데이트");
+        System.out.println("        [mp] conductive");
+        System.out.println("        [mram] CBRAM, ReRAM, oxram, mram, stt-ram, rram");
+        System.out.println("    * xls, xlsx 확장자 지원");
+        System.out.println("        다만 아쉽게도 구축도우미에서 받은 엑셀은 바로 불러와지지 않습니다.");
+        System.out.println("    * 알고리즘 개선");
+        System.out.println("        이제 파일명이나 경로가 잘못되어도 프로그램이 바로 종료되지 않습니다.");
 
         // result = ExcelRead();
         ExcelWrite(ExcelRead());
@@ -87,7 +91,7 @@ public class TempAutomation {
             result.put("col_index", col_index + "");
         } catch (Exception e) {
             // e.printStackTrace();
-            System.out.println(" [ERROR] 잘못된 경로입니다.");
+            System.out.println(" [ERROR] 잘못된 경로이거나 파일 형식 입니다.");
 
             ExcelWrite(ExcelRead());
         }
@@ -156,7 +160,7 @@ public class TempAutomation {
             }
 
             System.out.println("[   완   료   ]");
-            System.out.println(" ─────────────────────────────────────────");
+            System.out.println(" ─────────────────────────────");
             System.out.println(" 파일은 프로그램이 있는 경로에 저장됩니다.");
             System.out.print(" 저장할 파일명을 입력하세요 : ");
 
@@ -194,7 +198,6 @@ public class TempAutomation {
             for (int j = 0; j < col; j++) {
                 Matcher matcher = pattern.matcher(result.get(i + "-" + j));
                 if (matcher.find()) {
-                    System.out.println("적합한 단어를 찾았습니다.");
                     result.put((i + 1) + "-" + j, secondTable.get(result.get(i + "-" + j)));
                 }
             }
