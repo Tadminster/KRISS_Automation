@@ -6,24 +6,37 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class TempAutomation {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        System.out.println("");
         System.out.println(" 패치 노트");
-        System.out.println("    * 새로 추가된 물성표 업데이트");
+        System.out.println("    * 새로 추가된 물성표 대응");
         System.out.println("        [mp] conductive");
-        System.out.println("        [mram] CBRAM, ReRAM, oxram, mram, stt-ram, rram");
+        System.out.println("        [da] CBRAM, ReRAM, oxram, mram, rram, stt-ram");
+        System.out.println("        [pr] RHRS, RLRS");
+        System.out.println("");
         System.out.println("    * xls, xlsx 확장자 지원");
-        System.out.println("        다만 아쉽게도 구축도우미에서 받은 엑셀은 파일형식에 문제가 있기 때문에 바로");
-        System.out.println("        불러와지지 않습니다. 기존에 하시던대로 xls, xlsx 형식으로 다시 저장하신 후");
-        System.out.println("        새로 만든 엑셀 파일을 불러 오셔야 합니다.");
+        System.out.println("        다만 아쉽게도 구축도우미에서 받은 엑셀은 파일형식에 문제가 있기 때문에 ");
+        System.out.println("        바로 불러와지지 않습니다. 기존에 하시던대로 .xls 또는 .xlsx 형식으로");
+        System.out.println("        새로 저장하신 후 새로 만든 엑셀 파일을 불러 오셔야 합니다.");
+        System.out.println("");
         System.out.println("    * 알고리즘 개선");
         System.out.println("        이제 파일명이나 경로가 잘못되어도 프로그램이 바로 종료되지 않습니다.");
-        System.out.println("    * 문의사항은 'https://open.kakao.com/o/sSWuETmd' 로 주십시오.");
+        System.out.println("");
+        System.out.println("    - 문의사항은 'https://open.kakao.com/o/sSWuETmd' 로 주십시오.");
+        System.out.println("");
 
         ExcelWrite(ExcelRead());
 
@@ -42,55 +55,111 @@ public class TempAutomation {
         try {
 
             FileInputStream file = new FileInputStream(path);
-            Workbook workbook = WorkbookFactory.create(file);
 
-            // 시트 수 (첫번째에만 존재하므로 0을 준다)
-            // 만약 각 시트를 읽기위해서는 FOR문을 한번더 돌려준다
-            Sheet sheet = workbook.getSheetAt(0);
-            // 행의 수
-            int rows = sheet.getPhysicalNumberOfRows();
-            row_index = rows;
-            for (int rowindex = 0; rowindex < rows; rowindex++) {
-                // 행을읽는다
-                Row row = sheet.getRow(rowindex);
-                if (row != null) {
-                    // 셀의 수
-                    int cells = row.getPhysicalNumberOfCells();
-                    col_index = cells;
-                    for (int columnindex = 0; columnindex <= cells; columnindex++) {
-                        // 셀값을 읽는다
-                        Cell cell = row.getCell(columnindex);
-                        String value = "";
-                        // 셀이 빈값일경우를 위한 널체크
-                        if (cell == null) {
-                            continue;
-                        } else {
-                            // 타입별로 내용 읽기
-                            switch (cell.getCellType()) {
-                                case FORMULA:
-                                    value = cell.getCellFormula();
-                                    break;
-                                case NUMERIC:
-                                    value = cell.getNumericCellValue() + "";
-                                    break;
-                                case STRING:
-                                    value = cell.getStringCellValue() + "";
-                                    break;
-                                case BLANK:
-                                    value = cell.getBooleanCellValue() + "";
-                                    break;
-                                case ERROR:
-                                    value = cell.getErrorCellValue() + "";
-                                    break;
+            String[] strs = path.split("\\.");
+            if (strs[strs.length - 1].equals("xlsx")) {
+                XSSFWorkbook workbook = new XSSFWorkbook(path);
+
+                // 시트 수 (첫번째에만 존재하므로 0을 준다)
+                // 만약 각 시트를 읽기위해서는 FOR문을 한번더 돌려준다
+                XSSFSheet sheet = workbook.getSheetAt(0);
+                // 행의 수
+                int rows = sheet.getPhysicalNumberOfRows();
+                row_index = rows;
+                for (int rowindex = 0; rowindex < rows; rowindex++) {
+                    // 행을읽는다
+                    XSSFRow row = sheet.getRow(rowindex);
+                    if (row != null) {
+                        // 셀의 수
+                        int cells = row.getPhysicalNumberOfCells();
+                        col_index = cells;
+                        for (int columnindex = 0; columnindex <= cells; columnindex++) {
+                            // 셀값을 읽는다
+                            XSSFCell cell = row.getCell(columnindex);
+                            String value = "";
+                            // 셀이 빈값일경우를 위한 널체크
+                            if (cell == null) {
+                                continue;
+                            } else {
+                                // 타입별로 내용 읽기
+                                switch (cell.getCellType()) {
+                                    case FORMULA:
+                                        value = cell.getCellFormula();
+                                        break;
+                                    case NUMERIC:
+                                        value = cell.getNumericCellValue() + "";
+                                        break;
+                                    case STRING:
+                                        value = cell.getStringCellValue() + "";
+                                        break;
+                                    case BLANK:
+                                        value = cell.getBooleanCellValue() + "";
+                                        break;
+                                    case ERROR:
+                                        value = cell.getErrorCellValue() + "";
+                                        break;
+                                }
                             }
+                            // 읽어온 값들을 해쉬테이블에 저장
+                            result.put(rowindex + "-" + columnindex, value);
                         }
-                        // 읽어온 값들을 해쉬테이블에 저장
-                        result.put(rowindex + "-" + columnindex, value);
                     }
                 }
+                result.put("row_index", row_index + "");
+                result.put("col_index", col_index + "");
+
+            } else {
+                Workbook workbook = WorkbookFactory.create(file);
+
+                // 시트 수 (첫번째에만 존재하므로 0을 준다)
+                // 만약 각 시트를 읽기위해서는 FOR문을 한번더 돌려준다
+                Sheet sheet = workbook.getSheetAt(0);
+                // 행의 수
+                int rows = sheet.getPhysicalNumberOfRows();
+                row_index = rows;
+                for (int rowindex = 0; rowindex < rows; rowindex++) {
+                    // 행을읽는다
+                    Row row = sheet.getRow(rowindex);
+                    if (row != null) {
+                        // 셀의 수
+                        int cells = row.getPhysicalNumberOfCells();
+                        col_index = cells;
+                        for (int columnindex = 0; columnindex <= cells; columnindex++) {
+                            // 셀값을 읽는다
+                            Cell cell = row.getCell(columnindex);
+                            String value = "";
+                            // 셀이 빈값일경우를 위한 널체크
+                            if (cell == null) {
+                                continue;
+                            } else {
+                                // 타입별로 내용 읽기
+                                switch (cell.getCellType()) {
+                                    case FORMULA:
+                                        value = cell.getCellFormula();
+                                        break;
+                                    case NUMERIC:
+                                        value = cell.getNumericCellValue() + "";
+                                        break;
+                                    case STRING:
+                                        value = cell.getStringCellValue() + "";
+                                        break;
+                                    case BLANK:
+                                        value = cell.getBooleanCellValue() + "";
+                                        break;
+                                    case ERROR:
+                                        value = cell.getErrorCellValue() + "";
+                                        break;
+                                }
+                            }
+                            // 읽어온 값들을 해쉬테이블에 저장
+                            result.put(rowindex + "-" + columnindex, value);
+                        }
+                    }
+                }
+                result.put("row_index", row_index + "");
+                result.put("col_index", col_index + "");
             }
-            result.put("row_index", row_index + "");
-            result.put("col_index", col_index + "");
+
         } catch (Exception e) {
             // e.printStackTrace();
             System.out.println(" [ERROR] 잘못된 경로이거나 파일 형식 입니다.");
@@ -174,7 +243,7 @@ public class TempAutomation {
             workbook.close();
 
             System.out.println(" \"" + fileName + ".xlsx\" 저장완료. ");
-            Thread.sleep(1000);
+            Thread.sleep(2000);
 
         } catch (Exception e) {
             // e.printStackTrace();
