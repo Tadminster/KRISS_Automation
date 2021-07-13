@@ -1,5 +1,7 @@
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -16,47 +18,189 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.EventQueue;
+import java.awt.Desktop;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JFrame;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JTextField;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.FontUIResource;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 public class TempAutomation {
+    private JFrame frmNull;
+    private JTextField textField;
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println("");
-        System.out.println(" 패치 노트");
-        System.out.println("    * 새로 추가된 물성표 대응");
-        System.out.println("        [mp] conductive");
-        System.out.println("        [da] CBRAM, ReRAM, oxram, mram, rram, stt-ram");
-        System.out.println("        [pr] RHRS, RLRS");
-        System.out.println("");
-        System.out.println("    * xls, xlsx 확장자 지원");
-        System.out.println("        다만 아쉽게도 구축도우미에서 받은 엑셀은 파일형식에 문제가 있기 때문에 ");
-        System.out.println("        바로 불러와지지 않습니다. 기존에 하시던대로 .xls 또는 .xlsx 형식으로");
-        System.out.println("        새로 저장하신 후 새로 만든 엑셀 파일을 불러 오셔야 합니다.");
-        System.out.println("");
-        System.out.println("    * 알고리즘 개선");
-        System.out.println("        이제 파일명이나 경로가 잘못되어도 프로그램이 바로 종료되지 않습니다.");
-        System.out.println("");
-        System.out.println("    - 문의사항은 'https://open.kakao.com/o/sSWuETmd' 로 주십시오.");
-        System.out.println("");
-
-        ExcelWrite(ExcelRead());
-
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    TempAutomation window = new TempAutomation();
+                    window.frmNull.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    private static Hashtable<String, String> ExcelRead() {
+    private void initialize() {
+
+        // 프레임
+        frmNull = new JFrame();
+        frmNull.setTitle("null");
+        frmNull.setBounds(100, 100, 450, 130);
+        frmNull.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frmNull.getContentPane().setLayout(null);
+
+        URL imageURL = TempAutomation.class.getClassLoader().getResource("null_icon.png");
+        ImageIcon img = new ImageIcon(imageURL);
+        frmNull.setIconImage(img.getImage());
+
+        // 파일 경로
+        textField = new JTextField();
+        textField.setHorizontalAlignment(SwingConstants.CENTER);
+        textField.setText("경로를 입력하세요.");
+        textField.setBounds(12, 15, 306, 45);
+        frmNull.getContentPane().add(textField);
+        textField.setColumns(10);
+
+        // 변환
+        JButton btnConvert = new JButton("변환");
+        btnConvert.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExcelWrite(ExcelRead(textField.getText()));
+                textField.setText("변환 완료!");
+            }
+        });
+        btnConvert.setFont(new Font("맑은 고딕", Font.BOLD, 14));
+        btnConvert.setBackground(SystemColor.controlHighlight);
+        btnConvert.setBounds(330, 15, 97, 45);
+        frmNull.getContentPane().add(btnConvert);
+
+        // 메뉴
+        JMenuBar menuBar = new JMenuBar();
+        frmNull.setJMenuBar(menuBar);
+
+        JMenu mnMenu = new JMenu("메뉴");
+        mnMenu.setBackground(SystemColor.activeCaptionBorder);
+        mnMenu.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+        menuBar.add(mnMenu);
+
+        // 불러오기
+        JMenuItem menuLoad = new JMenuItem("경로 불러오기");
+        menuLoad.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setCurrentDirectory(new File("."));
+                fileChooser.setFileFilter(new FileNameExtensionFilter("엑셀", "xls", "xlsx"));
+                fileChooser.setDialogTitle("엑셀 파일을 선택하세요.");
+
+                int response = fileChooser.showOpenDialog(null);
+
+                if (response == JFileChooser.APPROVE_OPTION) {
+                    // File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+                    textField.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                }
+            }
+        });
+        menuLoad.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+        mnMenu.add(menuLoad);
+
+        // 도움말
+        JMenu menuHelp = new JMenu("도움말");
+        menuHelp.setBackground(SystemColor.activeCaptionBorder);
+        menuHelp.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+        menuBar.add(menuHelp);
+
+        JMenuItem helpManual = new JMenuItem("사용방법");
+        helpManual.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String urlLink = "https://tadminster.tistory.com/12";
+
+                try {
+                    Desktop.getDesktop().browse(new URI(urlLink));
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                } catch (URISyntaxException ee) {
+                    ee.printStackTrace();
+                }
+            }
+        });
+        helpManual.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+        menuHelp.add(helpManual);
+
+        JMenuItem helpUpdate = new JMenuItem("변경사항");
+        helpUpdate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String urlLink = "https://tadminster.tistory.com/11";
+
+                try {
+                    Desktop.getDesktop().browse(new URI(urlLink));
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                } catch (URISyntaxException ee) {
+                    ee.printStackTrace();
+                }
+            }
+        });
+        helpUpdate.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+        menuHelp.add(helpUpdate);
+
+        JMenuItem helpContact = new JMenuItem("문의하기");
+        helpContact.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String urlLink = "https://open.kakao.com/o/sSWuETmd";
+
+                try {
+                    Desktop.getDesktop().browse(new URI(urlLink));
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                } catch (URISyntaxException ee) {
+                    ee.printStackTrace();
+                }
+            }
+        });
+        helpContact.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+        menuHelp.add(helpContact);
+    }
+
+    public TempAutomation() {
+        initialize();
+    }
+
+    private static Hashtable<String, String> ExcelRead(String path) {
         Hashtable<String, String> result = new Hashtable<>();
         int row_index = 0;
         int col_index = 0;
-
-        System.out.println(" ─────────────────────────────");
-        System.out.print(" 변환할 파일의 경로를 입력하세요 : ");
-        String path = scanner.nextLine();
-        System.out.println(" 파일을 읽어오는 중 ....");
 
         try {
 
             FileInputStream file = new FileInputStream(path);
 
             String[] strs = path.split("\\.");
+            String[] paths = strs[0].split("(/|\\\\)");
+            String fileName = paths[paths.length - 1];
+
             if (strs[strs.length - 1].equals("xlsx")) {
                 XSSFWorkbook workbook = new XSSFWorkbook(path);
 
@@ -107,6 +251,8 @@ public class TempAutomation {
                 }
                 result.put("row_index", row_index + "");
                 result.put("col_index", col_index + "");
+                result.put("fileName", fileName);
+                workbook.close();
 
             } else {
                 Workbook workbook = WorkbookFactory.create(file);
@@ -158,13 +304,14 @@ public class TempAutomation {
                 }
                 result.put("row_index", row_index + "");
                 result.put("col_index", col_index + "");
+                result.put("fileName", fileName);
+                workbook.close();
             }
 
         } catch (Exception e) {
-            // e.printStackTrace();
-            System.out.println(" [ERROR] 잘못된 경로이거나 파일 형식 입니다.");
-
-            ExcelWrite(ExcelRead());
+            UIManager.put("OptionPane.messageFont", new FontUIResource(new Font("맑은 고딕", Font.BOLD, 16)));
+            JOptionPane.showMessageDialog(null, "잘못된 경로이거나 잘못된 파일입니다.", "ERROR", JOptionPane.WARNING_MESSAGE);
+            e.printStackTrace();
         }
         return result;
     }
@@ -225,28 +372,17 @@ public class TempAutomation {
                         cell.setCellValue(result.get(i + "-" + j));
                         beginning = true;
                     }
-
-                    System.out.println("[" + i + " 행, " + j + " 열]");
                 }
             }
 
-            System.out.println("[   완   료   ]");
-            System.out.println(" ─────────────────────────────");
-            System.out.println(" 파일은 프로그램이 있는 경로에 저장됩니다.");
-            System.out.print(" 저장할 파일명을 입력하세요 : ");
-
-            String fileName = scanner.next();
-            scanner.close();
-            String path = ".\\" + fileName + ".xlsx";
+            String path = ".\\" + result.get("fileName") + "_변환.xlsx";
             FileOutputStream Output = new FileOutputStream(path);
             workbook.write(Output);
+            Output.close();
             workbook.close();
 
-            System.out.println(" \"" + fileName + ".xlsx\" 저장완료. ");
-            Thread.sleep(2000);
-
         } catch (Exception e) {
-            // e.printStackTrace();
+            e.printStackTrace();
         }
 
     }
@@ -259,24 +395,64 @@ public class TempAutomation {
         secondTable.put("mram", "da");
         secondTable.put("stt-ram", "da");
         secondTable.put("rram", "da");
+
+        secondTable.put("multilayer", "ds");
+
+        secondTable.put("vacuum", "e");
+
         secondTable.put("conductive", "mp");
+        secondTable.put("magneto-electrical", "mp");
+        secondTable.put("magnetic", "mp");
+        secondTable.put("ferromagnetism", "mp");
+        secondTable.put("diamagnetic", "mp");
+        secondTable.put("conductive", "mp");
+
+        secondTable.put("transition", "mc");
+
+        secondTable.put("RHRS", "pr");
+        secondTable.put("RLRS", "pr");
+        secondTable.put("resistive", "pr");
+        secondTable.put("resistance-state", "pr");
+        secondTable.put("resistance", "pr");
+        secondTable.put("HRS,LRS", "pr");
+        secondTable.put("HRS", "pr");
+        secondTable.put("LRS", "pr");
+        secondTable.put("high‐resistance,low-resistance", "pr");
+        secondTable.put("high‐resistance", "pr");
+        secondTable.put("low-resistance", "pr");
+        secondTable.put("conductivity", "pr");
+
+        secondTable.put("retention", "pre");
+        secondTable.put("lifetime", "pre");
+        secondTable.put("duration", "pre");
+
+        secondTable.put("Vset", "pv");
+        secondTable.put("Vreset", "pv");
+        secondTable.put("Vread", "pv");
+        secondTable.put("Vprogram", "pv");
+        secondTable.put("voltage", "pv");
+        secondTable.put("Vforming", "pv");
+        secondTable.put("Verase", "pv");
+
+        secondTable.put("anneal", "s");
 
         try {
 
             int row = Integer.parseInt(result.get("row_index"));
             int col = Integer.parseInt(result.get("col_index"));
 
-            Pattern pattern = Pattern.compile("(CBRAM|ReRAM|oxram|mram|stt-ram|rram|conductive|RHRS|RLRS)");
+            Pattern pattern = Pattern.compile(
+                    "(Verase|Vforming|voltage|Vprogram|Vread|Vreset|Vset|duration|conductivity|CBRAM|ReRAM|oxram|mram|stt-ram|rram|conductive|RHRS|RLRS|retention|lifetime|anneal|multilayer|vacuum|transition|magneto-electrical|magnetic|ferromagnetism|diamagnetic|conductive|resistance|resistance-state|resistive|HRS,LRS|HRS|LRS|high‐resistance,low-resistance|high‐resistance|low-resistance)");
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
                     Matcher matcher = pattern.matcher(result.get(i + "-" + j));
                     if (matcher.find()) {
-                        result.put((i + 1) + "-" + j, secondTable.get(result.get(i + "-" + j)));
+                        result.put((i + 1) + "-" + j, secondTable.get(matcher.group()));
                     }
                 }
             }
         } catch (Exception e) {
-            // e.printStackTrace();
+            e.printStackTrace();
         }
         return result;
     }
