@@ -348,11 +348,18 @@ public class TempAutomation {
                         beginning = true;
                         continue;
                     } else if (i == 0 || i % 2 == 1 || j == 0) {
-                        // 본문은 그대로 쓰기
-                        cell.setCellValue(result.get(i + "-" + j));
+                        // 본문은
+                        if (isStringDouble(result.get(i + "-" + j))) {
+                            // 숫자면 더블로 변환
+                            double doubleValue = Double.parseDouble(result.get(i + "-" + j));
+                            cell.setCellValue(doubleValue);
+                        } else {
+                            // 그외엔 그대로 쓰기
+                            cell.setCellValue(result.get(i + "-" + j));
+                        }
                     } else if (i % 2 == 0 & j == 1) {
                         // category 함수
-                        cell.setCellValue("=\"[\"&COUNTIF(C" + (i + 1) + ":ZZ" + (i + 1)
+                        cell.setCellFormula("\"[\"&COUNTIF(C" + (i + 1) + ":ZZ" + (i + 1)
                                 + ",\"*-m*-*-*\")&\", \"&COUNTIF(C" + (i + 1) + ":ZZ" + (i + 1)
                                 + ",\"*-d*\")&\", \"&COUNTIF(C" + (i + 1) + ":ZZ" + (i + 1)
                                 + ",\"*-p*\")&\", \"&COUNTIF(C" + (i + 1) + ":ZZ" + (i + 1)
@@ -387,6 +394,15 @@ public class TempAutomation {
 
     }
 
+    private static boolean isStringDouble(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     private static Hashtable<String, String> secondKriss(Hashtable<String, String> result) {
         Hashtable<String, String> secondTable = new Hashtable<>();
         secondTable.put("CBRAM", "da");
@@ -395,6 +411,7 @@ public class TempAutomation {
         secondTable.put("mram", "da");
         secondTable.put("stt-ram", "da");
         secondTable.put("rram", "da");
+        secondTable.put("rom", "da");
 
         secondTable.put("multilayer", "ds");
 
@@ -405,9 +422,11 @@ public class TempAutomation {
         secondTable.put("magnetic", "mp");
         secondTable.put("ferromagnetism", "mp");
         secondTable.put("diamagnetic", "mp");
-        secondTable.put("conductive", "mp");
+        secondTable.put("electrical", "mp");
 
         secondTable.put("transition", "mc");
+
+        secondTable.put("reswitching", "po");
 
         secondTable.put("RHRS", "pr");
         secondTable.put("RLRS", "pr");
@@ -442,7 +461,7 @@ public class TempAutomation {
             int col = Integer.parseInt(result.get("col_index"));
 
             Pattern pattern = Pattern.compile(
-                    "(Verase|Vforming|voltage|Vprogram|Vread|Vreset|Vset|duration|conductivity|CBRAM|ReRAM|oxram|mram|stt-ram|rram|conductive|RHRS|RLRS|retention|lifetime|anneal|multilayer|vacuum|transition|magneto-electrical|magnetic|ferromagnetism|diamagnetic|conductive|resistance|resistance-state|resistive|HRS,LRS|HRS|LRS|high‐resistance,low-resistance|high‐resistance|low-resistance)");
+                    "(rom|electrical|reswitching|Verase|Vforming|voltage|Vprogram|Vread|Vreset|Vset|duration|conductivity|CBRAM|ReRAM|oxram|mram|stt-ram|rram|conductive|RHRS|RLRS|retention|lifetime|anneal|multilayer|vacuum|transition|magneto-electrical|magnetic|ferromagnetism|diamagnetic|conductive|resistance|resistance-state|resistive|HRS,LRS|HRS|LRS|high‐resistance,low-resistance|high‐resistance|low-resistance)");
             for (int i = 0; i < row; i++) {
                 for (int j = 0; j < col; j++) {
                     Matcher matcher = pattern.matcher(result.get(i + "-" + j));
@@ -459,12 +478,6 @@ public class TempAutomation {
 
     private static Hashtable<String, String> labelingSet() {
         Hashtable<String, String> labelingSet = new Hashtable<>();
-        labelingSet.put("m1", "m1-o-o");
-        labelingSet.put("m2", "m2-o-o");
-        labelingSet.put("m3", "m3-o-o");
-        labelingSet.put("m4", "m4-o-o");
-        labelingSet.put("m5", "m5-o-o");
-        labelingSet.put("m6", "m5-o-o");
 
         labelingSet.put("d1", "m1-o-o");
         labelingSet.put("d2", "m2-o-o");
@@ -495,14 +508,6 @@ public class TempAutomation {
         labelingSet.put("m5d", "m5-d-o");
         labelingSet.put("m6d", "m5-d-o");
 
-        labelingSet.put("mp", "o-mp-o");
-        labelingSet.put("m1mp", "m1-mp-o");
-        labelingSet.put("m2mp", "m2-mp-o");
-        labelingSet.put("m3mp", "m3-mp-o");
-        labelingSet.put("m4mp", "m4-mp-o");
-        labelingSet.put("m5mp", "m5-mp-o");
-        labelingSet.put("m6mp", "m5-mp-o");
-
         labelingSet.put("ds", "o-ds-o");
         labelingSet.put("m1ds", "m1-ds-o");
         labelingSet.put("m2ds", "m2-ds-o");
@@ -518,6 +523,45 @@ public class TempAutomation {
         labelingSet.put("m4da", "m4-da-o");
         labelingSet.put("m5da", "m5-da-o");
         labelingSet.put("m6da", "m6-da-o");
+
+        labelingSet.put("m", "o-m-o");
+        labelingSet.put("m1m", "m1-m-o");
+        labelingSet.put("m2m", "m2-m-o");
+        labelingSet.put("m3m", "m3-m-o");
+        labelingSet.put("m4m", "m4-m-o");
+        labelingSet.put("m5m", "m5-m-o");
+        labelingSet.put("m6m", "m6-m-o");
+
+        labelingSet.put("mc", "o-mc-o");
+        labelingSet.put("m1mc", "m1-mc-o");
+        labelingSet.put("m2mc", "m2-mc-o");
+        labelingSet.put("m3mc", "m3-mc-o");
+        labelingSet.put("m4mc", "m4-mc-o");
+        labelingSet.put("m5mc", "m5-mc-o");
+        labelingSet.put("m6mc", "m6-mc-o");
+
+        labelingSet.put("mp", "o-mp-o");
+        labelingSet.put("m1mp", "m1-mp-o");
+        labelingSet.put("m2mp", "m2-mp-o");
+        labelingSet.put("m3mp", "m3-mp-o");
+        labelingSet.put("m4mp", "m4-mp-o");
+        labelingSet.put("m5mp", "m5-mp-o");
+        labelingSet.put("m6mp", "m5-mp-o");
+
+        labelingSet.put("m1", "m1-o-o");
+        labelingSet.put("m2", "m2-o-o");
+        labelingSet.put("m3", "m3-o-o");
+        labelingSet.put("m4", "m4-o-o");
+        labelingSet.put("m5", "m5-o-o");
+        labelingSet.put("m6", "m5-o-o");
+
+        labelingSet.put("p", "o-p-o");
+        labelingSet.put("m1p", "m1-p-o");
+        labelingSet.put("m2p", "m2-p-o");
+        labelingSet.put("m3p", "m3-p-o");
+        labelingSet.put("m4p", "m4-p-o");
+        labelingSet.put("m5p", "m5-p-o");
+        labelingSet.put("m6p", "m6-p-o");
 
         labelingSet.put("pp", "o-pp-o");
         labelingSet.put("m1pp", "m1-pp-o");
@@ -598,14 +642,6 @@ public class TempAutomation {
         labelingSet.put("m4plec", "m4-plec-o");
         labelingSet.put("m5plec", "m5-plec-o");
         labelingSet.put("m6plec", "m6-plec-o");
-
-        labelingSet.put("mc", "o-mc-o");
-        labelingSet.put("m1mc", "m1-mc-o");
-        labelingSet.put("m2mc", "m2-mc-o");
-        labelingSet.put("m3mc", "m3-mc-o");
-        labelingSet.put("m4mc", "m4-mc-o");
-        labelingSet.put("m5mc", "m5-mc-o");
-        labelingSet.put("m6mc", "m6-mc-o");
 
         labelingSet.put("e", "o-e-o");
         labelingSet.put("m1e", "m1-e-o");
