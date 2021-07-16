@@ -88,8 +88,14 @@ public class TempAutomation {
         JButton btnConvert = new JButton("변환");
         btnConvert.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ExcelWrite(ExcelRead(textField.getText()));
-                textField.setText("변환 완료!");
+                int result = 0;
+                result = ExcelWrite(ExcelRead(textField.getText()));
+                if (result == 1) {
+                	textField.setText("변환 완료!");
+                } else {
+                	textField.setText("ERROR!");
+                }
+
             }
         });
         btnConvert.setFont(new Font("맑은 고딕", Font.BOLD, 14));
@@ -316,7 +322,7 @@ public class TempAutomation {
         return result;
     }
 
-    private static void ExcelWrite(Hashtable<String, String> result) {
+    private static int ExcelWrite(Hashtable<String, String> result) {
         result = secondKriss(result);
 
         // Labeling tag
@@ -388,10 +394,13 @@ public class TempAutomation {
             Output.close();
             workbook.close();
 
+            return 1;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        
+        return 0;
     }
 
     private static boolean isStringDouble(String str) {
@@ -479,27 +488,6 @@ public class TempAutomation {
     private static Hashtable<String, String> labelingSet() {
         Hashtable<String, String> labelingSet = new Hashtable<>();
 
-        labelingSet.put("d1", "m1-o-o");
-        labelingSet.put("d2", "m2-o-o");
-        labelingSet.put("d3", "m3-o-o");
-        labelingSet.put("d4", "m4-o-o");
-        labelingSet.put("d5", "m5-o-o");
-        labelingSet.put("d6", "m5-o-o");
-
-        labelingSet.put("d1s", "m1-s-o");
-        labelingSet.put("d2s", "m2-s-o");
-        labelingSet.put("d3s", "m3-s-o");
-        labelingSet.put("d4s", "m4-s-o");
-        labelingSet.put("d5s", "m5-s-o");
-        labelingSet.put("d6s", "m5-s-o");
-
-        labelingSet.put("d1ds", "m1-ds-o");
-        labelingSet.put("d2ds", "m2-ds-o");
-        labelingSet.put("d3ds", "m3-ds-o");
-        labelingSet.put("d4ds", "m4-ds-o");
-        labelingSet.put("d5ds", "m5-ds-o");
-        labelingSet.put("d6ds", "m5-ds-o");
-
         labelingSet.put("d", "o-d-o");
         labelingSet.put("m1d", "m1-d-o");
         labelingSet.put("m2d", "m2-d-o");
@@ -507,6 +495,35 @@ public class TempAutomation {
         labelingSet.put("m4d", "m4-d-o");
         labelingSet.put("m5d", "m5-d-o");
         labelingSet.put("m6d", "m5-d-o");
+
+        labelingSet.put("d1", "m1-o-o");
+        labelingSet.put("d2", "m2-o-o");
+        labelingSet.put("d3", "m3-o-o");
+        labelingSet.put("d4", "m4-o-o");
+        labelingSet.put("d5", "m5-o-o");
+        labelingSet.put("d6", "m5-o-o");
+
+        labelingSet.put("d1d", "m1-d-o");
+        labelingSet.put("d2d", "m2-d-o");
+        labelingSet.put("d3d", "m3-d-o");
+        labelingSet.put("d4d", "m4-d-o");
+        labelingSet.put("d5d", "m5-d-o");
+        labelingSet.put("d6d", "m5-d-o");
+
+        labelingSet.put("da", "o-da-o");
+        labelingSet.put("m1da", "m1-da-o");
+        labelingSet.put("m2da", "m2-da-o");
+        labelingSet.put("m3da", "m3-da-o");
+        labelingSet.put("m4da", "m4-da-o");
+        labelingSet.put("m5da", "m5-da-o");
+        labelingSet.put("m6da", "m6-da-o");
+
+        labelingSet.put("d1da", "m1-da-o");
+        labelingSet.put("d2da", "m2-da-o");
+        labelingSet.put("d3da", "m3-da-o");
+        labelingSet.put("d4da", "m4-da-o");
+        labelingSet.put("d5da", "m5-da-o");
+        labelingSet.put("d6da", "m5-da-o");
 
         labelingSet.put("ds", "o-ds-o");
         labelingSet.put("m1ds", "m1-ds-o");
@@ -516,13 +533,12 @@ public class TempAutomation {
         labelingSet.put("m5ds", "m5-ds-o");
         labelingSet.put("m6ds", "m6-ds-o");
 
-        labelingSet.put("da", "o-da-o");
-        labelingSet.put("m1da", "m1-da-o");
-        labelingSet.put("m2da", "m2-da-o");
-        labelingSet.put("m3da", "m3-da-o");
-        labelingSet.put("m4da", "m4-da-o");
-        labelingSet.put("m5da", "m5-da-o");
-        labelingSet.put("m6da", "m6-da-o");
+        labelingSet.put("d1ds", "m1-ds-o");
+        labelingSet.put("d2ds", "m2-ds-o");
+        labelingSet.put("d3ds", "m3-ds-o");
+        labelingSet.put("d4ds", "m4-ds-o");
+        labelingSet.put("d5ds", "m5-ds-o");
+        labelingSet.put("d6ds", "m5-ds-o");
 
         labelingSet.put("m", "o-m-o");
         labelingSet.put("m1m", "m1-m-o");
@@ -658,6 +674,13 @@ public class TempAutomation {
         labelingSet.put("m4s", "m4-s-o");
         labelingSet.put("m5s", "m5-s-o");
         labelingSet.put("m6s", "m6-s-o");
+
+        labelingSet.put("d1s", "m1-s-o");
+        labelingSet.put("d2s", "m2-s-o");
+        labelingSet.put("d3s", "m3-s-o");
+        labelingSet.put("d4s", "m4-s-o");
+        labelingSet.put("d5s", "m5-s-o");
+        labelingSet.put("d6s", "m5-s-o");
 
         labelingSet.put("v", "o-o-v");
         labelingSet.put("m1v", "m1-o-v");
