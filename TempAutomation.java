@@ -91,9 +91,9 @@ public class TempAutomation {
                 int result = 0;
                 result = ExcelWrite(ExcelRead(textField.getText()));
                 if (result == 1) {
-                	textField.setText("변환 완료!");
+                    textField.setText("변환 완료!");
                 } else {
-                	textField.setText("ERROR!");
+                    textField.setText("ERROR!");
                 }
 
             }
@@ -399,7 +399,7 @@ public class TempAutomation {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         return 0;
     }
 
@@ -488,6 +488,21 @@ public class TempAutomation {
     private static Hashtable<String, String> labelingSet() {
         Hashtable<String, String> labelingSet = new Hashtable<>();
 
+        labelingSet.put("d1", "m1-o-o");
+        labelingSet.put("d2", "m2-o-o");
+        labelingSet.put("d3", "m3-o-o");
+        labelingSet.put("d4", "m4-o-o");
+        labelingSet.put("d5", "m5-o-o");
+        labelingSet.put("d6", "m5-o-o");
+
+        labelingSet.put("m1", "m1-o-o");
+        labelingSet.put("m2", "m2-o-o");
+        labelingSet.put("m3", "m3-o-o");
+        labelingSet.put("m4", "m4-o-o");
+        labelingSet.put("m5", "m5-o-o");
+        labelingSet.put("m6", "m5-o-o");
+
+        // d
         labelingSet.put("d", "o-d-o");
         labelingSet.put("m1d", "m1-d-o");
         labelingSet.put("m2d", "m2-d-o");
@@ -496,13 +511,6 @@ public class TempAutomation {
         labelingSet.put("m5d", "m5-d-o");
         labelingSet.put("m6d", "m5-d-o");
 
-        labelingSet.put("d1", "m1-o-o");
-        labelingSet.put("d2", "m2-o-o");
-        labelingSet.put("d3", "m3-o-o");
-        labelingSet.put("d4", "m4-o-o");
-        labelingSet.put("d5", "m5-o-o");
-        labelingSet.put("d6", "m5-o-o");
-
         labelingSet.put("d1d", "m1-d-o");
         labelingSet.put("d2d", "m2-d-o");
         labelingSet.put("d3d", "m3-d-o");
@@ -510,6 +518,7 @@ public class TempAutomation {
         labelingSet.put("d5d", "m5-d-o");
         labelingSet.put("d6d", "m5-d-o");
 
+        // da
         labelingSet.put("da", "o-da-o");
         labelingSet.put("m1da", "m1-da-o");
         labelingSet.put("m2da", "m2-da-o");
@@ -525,6 +534,7 @@ public class TempAutomation {
         labelingSet.put("d5da", "m5-da-o");
         labelingSet.put("d6da", "m5-da-o");
 
+        // ds
         labelingSet.put("ds", "o-ds-o");
         labelingSet.put("m1ds", "m1-ds-o");
         labelingSet.put("m2ds", "m2-ds-o");
@@ -540,125 +550,7 @@ public class TempAutomation {
         labelingSet.put("d5ds", "m5-ds-o");
         labelingSet.put("d6ds", "m5-ds-o");
 
-        labelingSet.put("m", "o-m-o");
-        labelingSet.put("m1m", "m1-m-o");
-        labelingSet.put("m2m", "m2-m-o");
-        labelingSet.put("m3m", "m3-m-o");
-        labelingSet.put("m4m", "m4-m-o");
-        labelingSet.put("m5m", "m5-m-o");
-        labelingSet.put("m6m", "m6-m-o");
-
-        labelingSet.put("mc", "o-mc-o");
-        labelingSet.put("m1mc", "m1-mc-o");
-        labelingSet.put("m2mc", "m2-mc-o");
-        labelingSet.put("m3mc", "m3-mc-o");
-        labelingSet.put("m4mc", "m4-mc-o");
-        labelingSet.put("m5mc", "m5-mc-o");
-        labelingSet.put("m6mc", "m6-mc-o");
-
-        labelingSet.put("mp", "o-mp-o");
-        labelingSet.put("m1mp", "m1-mp-o");
-        labelingSet.put("m2mp", "m2-mp-o");
-        labelingSet.put("m3mp", "m3-mp-o");
-        labelingSet.put("m4mp", "m4-mp-o");
-        labelingSet.put("m5mp", "m5-mp-o");
-        labelingSet.put("m6mp", "m5-mp-o");
-
-        labelingSet.put("m1", "m1-o-o");
-        labelingSet.put("m2", "m2-o-o");
-        labelingSet.put("m3", "m3-o-o");
-        labelingSet.put("m4", "m4-o-o");
-        labelingSet.put("m5", "m5-o-o");
-        labelingSet.put("m6", "m5-o-o");
-
-        labelingSet.put("p", "o-p-o");
-        labelingSet.put("m1p", "m1-p-o");
-        labelingSet.put("m2p", "m2-p-o");
-        labelingSet.put("m3p", "m3-p-o");
-        labelingSet.put("m4p", "m4-p-o");
-        labelingSet.put("m5p", "m5-p-o");
-        labelingSet.put("m6p", "m6-p-o");
-
-        labelingSet.put("pp", "o-pp-o");
-        labelingSet.put("m1pp", "m1-pp-o");
-        labelingSet.put("m2pp", "m2-pp-o");
-        labelingSet.put("m3pp", "m3-pp-o");
-        labelingSet.put("m4pp", "m4-pp-o");
-        labelingSet.put("m5pp", "m5-pp-o");
-        labelingSet.put("m6pp", "m6-pp-o");
-
-        labelingSet.put("pc", "o-pc-o");
-        labelingSet.put("m1pc", "m1-pc-o");
-        labelingSet.put("m2pc", "m2-pc-o");
-        labelingSet.put("m3pc", "m3-pc-o");
-        labelingSet.put("m4pc", "m4-pc-o");
-        labelingSet.put("m5pc", "m5-pc-o");
-        labelingSet.put("m6pc", "m6-pc-o");
-
-        labelingSet.put("pv", "o-pv-o");
-        labelingSet.put("m1pv", "m1-pv-o");
-        labelingSet.put("m2pv", "m2-pv-o");
-        labelingSet.put("m3pv", "m3-pv-o");
-        labelingSet.put("m4pv", "m4-pv-o");
-        labelingSet.put("m5pv", "m5-pv-o");
-        labelingSet.put("m6pv", "m6-pv-o");
-
-        labelingSet.put("pr", "o-pr-o");
-        labelingSet.put("m1pr", "m1-pr-o");
-        labelingSet.put("m2pr", "m2-pr-o");
-        labelingSet.put("m3pr", "m3-pr-o");
-        labelingSet.put("m4pr", "m4-pr-o");
-        labelingSet.put("m5pr", "m5-pr-o");
-        labelingSet.put("m6pr", "m6-pr-o");
-
-        labelingSet.put("po", "o-po-o");
-        labelingSet.put("m1po", "m1-po-o");
-        labelingSet.put("m2po", "m2-po-o");
-        labelingSet.put("m3po", "m3-po-o");
-        labelingSet.put("m4po", "m4-po-o");
-        labelingSet.put("m5po", "m5-po-o");
-        labelingSet.put("m6po", "m6-po-o");
-
-        labelingSet.put("ps", "o-ps-o");
-        labelingSet.put("m1ps", "m1-ps-o");
-        labelingSet.put("m2ps", "m2-ps-o");
-        labelingSet.put("m3ps", "m3-ps-o");
-        labelingSet.put("m4ps", "m4-ps-o");
-        labelingSet.put("m5ps", "m5-ps-o");
-        labelingSet.put("m6ps", "m6-ps-o");
-
-        labelingSet.put("pe", "o-pe-o");
-        labelingSet.put("m1pe", "m1-pe-o");
-        labelingSet.put("m2pe", "m2-pe-o");
-        labelingSet.put("m3pe", "m3-pe-o");
-        labelingSet.put("m4pe", "m4-pe-o");
-        labelingSet.put("m5pe", "m5-pe-o");
-        labelingSet.put("m6pe", "m6-pe-o");
-
-        labelingSet.put("pre", "o-pre-o");
-        labelingSet.put("m1pre", "m1-pre-o");
-        labelingSet.put("m2pre", "m2-pre-o");
-        labelingSet.put("m3pre", "m3-pre-o");
-        labelingSet.put("m4pre", "m4-pre-o");
-        labelingSet.put("m5pre", "m5-pre-o");
-        labelingSet.put("m6pre", "m6-pre-o");
-
-        labelingSet.put("pab", "o-pab-o");
-        labelingSet.put("m1pab", "m1-pab-o");
-        labelingSet.put("m2pab", "m2-pab-o");
-        labelingSet.put("m3pab", "m3-pab-o");
-        labelingSet.put("m4pab", "m4-pab-o");
-        labelingSet.put("m5pab", "m5-pab-o");
-        labelingSet.put("m6pab", "m6-pab-o");
-
-        labelingSet.put("plec", "o-plec-o");
-        labelingSet.put("m1plec", "m1-plec-o");
-        labelingSet.put("m2plec", "m2-plec-o");
-        labelingSet.put("m3plec", "m3-plec-o");
-        labelingSet.put("m4plec", "m4-plec-o");
-        labelingSet.put("m5plec", "m5-plec-o");
-        labelingSet.put("m6plec", "m6-plec-o");
-
+        // e
         labelingSet.put("e", "o-e-o");
         labelingSet.put("m1e", "m1-e-o");
         labelingSet.put("m2e", "m2-e-o");
@@ -667,6 +559,254 @@ public class TempAutomation {
         labelingSet.put("m5e", "m5-e-o");
         labelingSet.put("m6e", "m6-e-o");
 
+        labelingSet.put("d1e", "m1-e-o");
+        labelingSet.put("d2e", "m2-e-o");
+        labelingSet.put("d3e", "m3-e-o");
+        labelingSet.put("d4e", "m4-e-o");
+        labelingSet.put("d5e", "m5-e-o");
+        labelingSet.put("d6e", "m6-e-o");
+
+        // m
+        labelingSet.put("m", "o-m-o");
+        labelingSet.put("m1m", "m1-m-o");
+        labelingSet.put("m2m", "m2-m-o");
+        labelingSet.put("m3m", "m3-m-o");
+        labelingSet.put("m4m", "m4-m-o");
+        labelingSet.put("m5m", "m5-m-o");
+        labelingSet.put("m6m", "m6-m-o");
+
+        labelingSet.put("d1m", "m1-m-o");
+        labelingSet.put("d2m", "m2-m-o");
+        labelingSet.put("d3m", "m3-m-o");
+        labelingSet.put("d4m", "m4-m-o");
+        labelingSet.put("d5m", "m5-m-o");
+        labelingSet.put("d6m", "m6-m-o");
+
+        // mc
+        labelingSet.put("mc", "o-mc-o");
+        labelingSet.put("m1mc", "m1-mc-o");
+        labelingSet.put("m2mc", "m2-mc-o");
+        labelingSet.put("m3mc", "m3-mc-o");
+        labelingSet.put("m4mc", "m4-mc-o");
+        labelingSet.put("m5mc", "m5-mc-o");
+        labelingSet.put("m6mc", "m6-mc-o");
+
+        labelingSet.put("d1mc", "m1-mc-o");
+        labelingSet.put("d2mc", "m2-mc-o");
+        labelingSet.put("d3mc", "m3-mc-o");
+        labelingSet.put("d4mc", "m4-mc-o");
+        labelingSet.put("d5mc", "m5-mc-o");
+        labelingSet.put("d6mc", "m6-mc-o");
+
+        // mp
+        labelingSet.put("mp", "o-mp-o");
+        labelingSet.put("m1mp", "m1-mp-o");
+        labelingSet.put("m2mp", "m2-mp-o");
+        labelingSet.put("m3mp", "m3-mp-o");
+        labelingSet.put("m4mp", "m4-mp-o");
+        labelingSet.put("m5mp", "m5-mp-o");
+        labelingSet.put("m6mp", "m5-mp-o");
+
+        labelingSet.put("d1mp", "m1-mp-o");
+        labelingSet.put("d2mp", "m2-mp-o");
+        labelingSet.put("d3mp", "m3-mp-o");
+        labelingSet.put("d4mp", "m4-mp-o");
+        labelingSet.put("d5mp", "m5-mp-o");
+        labelingSet.put("d6mp", "m5-mp-o");
+
+        // n
+        labelingSet.put("n", "o-o-v");
+        labelingSet.put("m1n", "m1-o-v");
+        labelingSet.put("m2n", "m2-o-v");
+        labelingSet.put("m3n", "m3-o-v");
+        labelingSet.put("m4n", "m4-o-v");
+        labelingSet.put("m5n", "m5-o-v");
+        labelingSet.put("m6n", "m6-o-v");
+
+        labelingSet.put("d1n", "m1-o-v");
+        labelingSet.put("d2n", "m2-o-v");
+        labelingSet.put("d3n", "m3-o-v");
+        labelingSet.put("d4n", "m4-o-v");
+        labelingSet.put("d5n", "m5-o-v");
+        labelingSet.put("d6n", "m6-o-v");
+
+        // p
+        labelingSet.put("p", "o-p-o");
+        labelingSet.put("m1p", "m1-p-o");
+        labelingSet.put("m2p", "m2-p-o");
+        labelingSet.put("m3p", "m3-p-o");
+        labelingSet.put("m4p", "m4-p-o");
+        labelingSet.put("m5p", "m5-p-o");
+        labelingSet.put("m6p", "m6-p-o");
+
+        labelingSet.put("d1p", "m1-p-o");
+        labelingSet.put("d2p", "m2-p-o");
+        labelingSet.put("d3p", "m3-p-o");
+        labelingSet.put("d4p", "m4-p-o");
+        labelingSet.put("d5p", "m5-p-o");
+        labelingSet.put("d6p", "m6-p-o");
+
+        // pc
+        labelingSet.put("pc", "o-pc-o");
+        labelingSet.put("m1pc", "m1-pc-o");
+        labelingSet.put("m2pc", "m2-pc-o");
+        labelingSet.put("m3pc", "m3-pc-o");
+        labelingSet.put("m4pc", "m4-pc-o");
+        labelingSet.put("m5pc", "m5-pc-o");
+        labelingSet.put("m6pc", "m6-pc-o");
+
+        labelingSet.put("d1pc", "m1-pc-o");
+        labelingSet.put("d2pc", "m2-pc-o");
+        labelingSet.put("d3pc", "m3-pc-o");
+        labelingSet.put("d4pc", "m4-pc-o");
+        labelingSet.put("d5pc", "m5-pc-o");
+        labelingSet.put("d6pc", "m6-pc-o");
+
+        // pe
+        labelingSet.put("pe", "o-pe-o");
+        labelingSet.put("m1pe", "m1-pe-o");
+        labelingSet.put("m2pe", "m2-pe-o");
+        labelingSet.put("m3pe", "m3-pe-o");
+        labelingSet.put("m4pe", "m4-pe-o");
+        labelingSet.put("m5pe", "m5-pe-o");
+        labelingSet.put("m6pe", "m6-pe-o");
+
+        labelingSet.put("d1pe", "m1-pe-o");
+        labelingSet.put("d2pe", "m2-pe-o");
+        labelingSet.put("d3pe", "m3-pe-o");
+        labelingSet.put("d4pe", "m4-pe-o");
+        labelingSet.put("d5pe", "m5-pe-o");
+        labelingSet.put("d6pe", "m6-pe-o");
+
+        // po
+        labelingSet.put("po", "o-po-o");
+        labelingSet.put("m1po", "m1-po-o");
+        labelingSet.put("m2po", "m2-po-o");
+        labelingSet.put("m3po", "m3-po-o");
+        labelingSet.put("m4po", "m4-po-o");
+        labelingSet.put("m5po", "m5-po-o");
+        labelingSet.put("m6po", "m6-po-o");
+
+        labelingSet.put("d1po", "m1-po-o");
+        labelingSet.put("d2po", "m2-po-o");
+        labelingSet.put("d3po", "m3-po-o");
+        labelingSet.put("d4po", "m4-po-o");
+        labelingSet.put("d5po", "m5-po-o");
+        labelingSet.put("d6po", "m6-po-o");
+
+        // pp
+        labelingSet.put("pp", "o-pp-o");
+        labelingSet.put("m1pp", "m1-pp-o");
+        labelingSet.put("m2pp", "m2-pp-o");
+        labelingSet.put("m3pp", "m3-pp-o");
+        labelingSet.put("m4pp", "m4-pp-o");
+        labelingSet.put("m5pp", "m5-pp-o");
+        labelingSet.put("m6pp", "m6-pp-o");
+
+        labelingSet.put("d1pp", "m1-pp-o");
+        labelingSet.put("d2pp", "m2-pp-o");
+        labelingSet.put("d3pp", "m3-pp-o");
+        labelingSet.put("d4pp", "m4-pp-o");
+        labelingSet.put("d5pp", "m5-pp-o");
+        labelingSet.put("d6pp", "m6-pp-o");
+
+        // pr
+        labelingSet.put("pr", "o-pr-o");
+        labelingSet.put("m1pr", "m1-pr-o");
+        labelingSet.put("m2pr", "m2-pr-o");
+        labelingSet.put("m3pr", "m3-pr-o");
+        labelingSet.put("m4pr", "m4-pr-o");
+        labelingSet.put("m5pr", "m5-pr-o");
+        labelingSet.put("m6pr", "m6-pr-o");
+
+        labelingSet.put("d1pr", "m1-pr-o");
+        labelingSet.put("d2pr", "m2-pr-o");
+        labelingSet.put("d3pr", "m3-pr-o");
+        labelingSet.put("d4pr", "m4-pr-o");
+        labelingSet.put("d5pr", "m5-pr-o");
+        labelingSet.put("d6pr", "m6-pr-o");
+
+        // pv
+        labelingSet.put("pv", "o-pv-o");
+        labelingSet.put("m1pv", "m1-pv-o");
+        labelingSet.put("m2pv", "m2-pv-o");
+        labelingSet.put("m3pv", "m3-pv-o");
+        labelingSet.put("m4pv", "m4-pv-o");
+        labelingSet.put("m5pv", "m5-pv-o");
+        labelingSet.put("m6pv", "m6-pv-o");
+
+        labelingSet.put("d1pv", "m1-pv-o");
+        labelingSet.put("d2pv", "m2-pv-o");
+        labelingSet.put("d3pv", "m3-pv-o");
+        labelingSet.put("d4pv", "m4-pv-o");
+        labelingSet.put("d5pv", "m5-pv-o");
+        labelingSet.put("d6pv", "m6-pv-o");
+
+        // ps
+        labelingSet.put("ps", "o-ps-o");
+        labelingSet.put("m1ps", "m1-ps-o");
+        labelingSet.put("m2ps", "m2-ps-o");
+        labelingSet.put("m3ps", "m3-ps-o");
+        labelingSet.put("m4ps", "m4-ps-o");
+        labelingSet.put("m5ps", "m5-ps-o");
+        labelingSet.put("m6ps", "m6-ps-o");
+
+        labelingSet.put("d1ps", "m1-ps-o");
+        labelingSet.put("d2ps", "m2-ps-o");
+        labelingSet.put("d3ps", "m3-ps-o");
+        labelingSet.put("d4ps", "m4-ps-o");
+        labelingSet.put("d5ps", "m5-ps-o");
+        labelingSet.put("d6ps", "m6-ps-o");
+
+        // pab
+        labelingSet.put("pab", "o-pab-o");
+        labelingSet.put("m1pab", "m1-pab-o");
+        labelingSet.put("m2pab", "m2-pab-o");
+        labelingSet.put("m3pab", "m3-pab-o");
+        labelingSet.put("m4pab", "m4-pab-o");
+        labelingSet.put("m5pab", "m5-pab-o");
+        labelingSet.put("m6pab", "m6-pab-o");
+
+        labelingSet.put("d1pab", "m1-pab-o");
+        labelingSet.put("d2pab", "m2-pab-o");
+        labelingSet.put("d3pab", "m3-pab-o");
+        labelingSet.put("d4pab", "m4-pab-o");
+        labelingSet.put("d5pab", "m5-pab-o");
+        labelingSet.put("d6pab", "m6-pab-o");
+
+        // pre
+        labelingSet.put("pre", "o-pre-o");
+        labelingSet.put("m1pre", "m1-pre-o");
+        labelingSet.put("m2pre", "m2-pre-o");
+        labelingSet.put("m3pre", "m3-pre-o");
+        labelingSet.put("m4pre", "m4-pre-o");
+        labelingSet.put("m5pre", "m5-pre-o");
+        labelingSet.put("m6pre", "m6-pre-o");
+
+        labelingSet.put("d1pre", "m1-pre-o");
+        labelingSet.put("d2pre", "m2-pre-o");
+        labelingSet.put("d3pre", "m3-pre-o");
+        labelingSet.put("d4pre", "m4-pre-o");
+        labelingSet.put("d5pre", "m5-pre-o");
+        labelingSet.put("d6pre", "m6-pre-o");
+
+        // plec
+        labelingSet.put("plec", "o-plec-o");
+        labelingSet.put("m1plec", "m1-plec-o");
+        labelingSet.put("m2plec", "m2-plec-o");
+        labelingSet.put("m3plec", "m3-plec-o");
+        labelingSet.put("m4plec", "m4-plec-o");
+        labelingSet.put("m5plec", "m5-plec-o");
+        labelingSet.put("m6plec", "m6-plec-o");
+
+        labelingSet.put("d1plec", "m1-plec-o");
+        labelingSet.put("d2plec", "m2-plec-o");
+        labelingSet.put("d3plec", "m3-plec-o");
+        labelingSet.put("d4plec", "m4-plec-o");
+        labelingSet.put("d5plec", "m5-plec-o");
+        labelingSet.put("d6plec", "m6-plec-o");
+
+        // s
         labelingSet.put("s", "o-s-o");
         labelingSet.put("m1s", "m1-s-o");
         labelingSet.put("m2s", "m2-s-o");
@@ -682,6 +822,23 @@ public class TempAutomation {
         labelingSet.put("d5s", "m5-s-o");
         labelingSet.put("d6s", "m5-s-o");
 
+        // u
+        labelingSet.put("u", "o-o-v");
+        labelingSet.put("m1u", "m1-o-v");
+        labelingSet.put("m2u", "m2-o-v");
+        labelingSet.put("m3u", "m3-o-v");
+        labelingSet.put("m4u", "m4-o-v");
+        labelingSet.put("m5u", "m5-o-v");
+        labelingSet.put("m6u", "m6-o-v");
+
+        labelingSet.put("d1u", "m1-o-v");
+        labelingSet.put("d2u", "m2-o-v");
+        labelingSet.put("d3u", "m3-o-v");
+        labelingSet.put("d4u", "m4-o-v");
+        labelingSet.put("d5u", "m5-o-v");
+        labelingSet.put("d6u", "m6-o-v");
+
+        // v
         labelingSet.put("v", "o-o-v");
         labelingSet.put("m1v", "m1-o-v");
         labelingSet.put("m2v", "m2-o-v");
@@ -690,21 +847,12 @@ public class TempAutomation {
         labelingSet.put("m5v", "m5-o-v");
         labelingSet.put("m6v", "m6-o-v");
 
-        labelingSet.put("n", "o-o-v");
-        labelingSet.put("m1n", "m1-o-v");
-        labelingSet.put("m2n", "m2-o-v");
-        labelingSet.put("m3n", "m3-o-v");
-        labelingSet.put("m4n", "m4-o-v");
-        labelingSet.put("m5n", "m5-o-v");
-        labelingSet.put("m6n", "m6-o-v");
-
-        labelingSet.put("u", "o-o-v");
-        labelingSet.put("m1u", "m1-o-v");
-        labelingSet.put("m2u", "m2-o-v");
-        labelingSet.put("m3u", "m3-o-v");
-        labelingSet.put("m4u", "m4-o-v");
-        labelingSet.put("m5u", "m5-o-v");
-        labelingSet.put("m6u", "m6-o-v");
+        labelingSet.put("d1v", "m1-o-v");
+        labelingSet.put("d2v", "m2-o-v");
+        labelingSet.put("d3v", "m3-o-v");
+        labelingSet.put("d4v", "m4-o-v");
+        labelingSet.put("d5v", "m5-o-v");
+        labelingSet.put("d6v", "m6-o-v");
 
         return labelingSet;
     }
